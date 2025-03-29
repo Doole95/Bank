@@ -3,11 +3,7 @@ package net.doole.banking;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.doole.banking.ANSI;
 
-import static net.doole.banking.ANSI.GREEN;
-import static net.doole.banking.ANSI.RED;
-import static net.doole.banking.ANSI.CYAN;
-import static net.doole.banking.ANSI.RESET;
-import static net.doole.banking.ANSI.YELLOW;
+import net.doole.banking.ANSI;
 
 public class Accounts {
 
@@ -19,6 +15,7 @@ public class Accounts {
 
     public Accounts(){
         this.accountNumber = accountCounter.getAndIncrement();
+        this.funds = Math.random() * 10000;
     }
 
     public int getAccountNumber() {
@@ -33,9 +30,20 @@ public class Accounts {
     public void addFunds(double amount) {
         if(amount > 0) {
             funds += amount;
-            System.out.println(GREEN + "Added £"+ amount +" to account "+ accountNumber + RESET);
+            System.out.println(ANSI.GREEN + "Added £"+ amount +" to account "+ accountNumber + ANSI.WHITE);
         }else {
-            System.out.println(RED + "Invalid amount. Must be greater than 0." + RESET);
+            System.out.println(ANSI.RED + "Invalid amount. Must be greater than 0." + ANSI.WHITE);
+        }
+    }
+
+
+    // Remove funds with color-coded confirmation
+    public void removeFunds(double amount) {
+        if (amount > 0 && amount <= funds) {
+            funds -= amount;
+            System.out.println(ANSI.RED + "Removed £" + amount + " from account " + accountNumber + ANSI.WHITE);
+        } else {
+            System.out.println(ANSI.RED + "Invalid amount or insufficient funds." + ANSI.WHITE);
         }
     }
 
@@ -43,11 +51,11 @@ public class Accounts {
 
     public String getFormattedBalance(){
         if(funds >= 5000) {
-            return GREEN + String.format("£%.2f", funds) + RESET;
+            return ANSI.GREEN + String.format("£%.2f", funds) + ANSI.WHITE;
         } else if (funds >= 1000) {
-            return CYAN + String.format("£%.2f", funds) + RESET;
+            return ANSI.CYAN + String.format("£%.2f", funds) + ANSI.WHITE;
         }else {
-            return RED + String.format("£%.2f", funds) + RESET;
+            return ANSI.RED + String.format("£%.2f", funds) + ANSI.WHITE;
         }
     }
 }

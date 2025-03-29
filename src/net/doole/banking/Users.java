@@ -4,6 +4,7 @@ package net.doole.banking;
 import java.util.Arrays;
 import java.util.List;
 import java.util.SplittableRandom;
+import net.doole.banking.ANSI;
 
 public class Users {
 
@@ -12,12 +13,6 @@ public class Users {
     public int age;
     private final Accounts account;
 
-    // ANSI color codes
-    private static final String RESET = "\u001B[0m";
-    private static final String RED = "\u001B[31m";
-    private static final String GREEN = "\u001B[32m";
-    private static final String CYAN = "\u001B[36m";
-    private static final String YELLOW = "\u001B[33m";
 
     public Users(String name, int id, int age, Accounts account) {
         this.name = name;
@@ -28,6 +23,18 @@ public class Users {
 
     public int getAccountNumber(){
         return account.getAccountNumber();
+    }
+
+    public double getFunds(){
+        return account.getFunds();
+    }
+
+    public void addFunds(double amount){
+        account.addFunds(amount);
+    }
+
+    public void removeFunds(double amount) {
+        account.removeFunds(amount);
     }
 
 
@@ -49,10 +56,11 @@ public class Users {
     }
 
     public String getFormattedOutput(){
-        return RED + "Name: " + RESET + name + " " +
-                GREEN + "ID: " + RESET + id + " " +
-                CYAN + "Age: " + RESET + age + " " +
-                YELLOW + "Account: " + RESET + getAccountNumber();
+        return ANSI.RED + "Name: " + ANSI.WHITE + name + " " +
+                ANSI.GREEN + "ID: " + ANSI.WHITE + id + " " +
+                ANSI.CYAN + "Age: " + ANSI.WHITE + age + " " +
+                ANSI.YELLOW + "Account: " + ANSI.WHITE + getAccountNumber() + " " +
+                ANSI.BLUE + "Balance: " + ANSI.WHITE + account.getFormattedBalance();
     }
 
 
