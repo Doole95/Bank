@@ -1,7 +1,14 @@
 package net.doole;
 
+import net.doole.banking.Users;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+
+        for(Users user : Users.getPeople()) {
+            System.out.println(user.getFormattedOutput());
+        }
+
+
     }
 }
